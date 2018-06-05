@@ -1,0 +1,39 @@
+In this paper, the researchers present Deep Neural Decision Forests, a model
+that unifies classification Trees with representational learning (or feature
+learning) functionality of Neural Networks. The method of training used is 
+end-to-end which is similar to how conventional Neural Networks are trained.
+The model that has been proposed is very much similar to what a simple
+convolutional network looks like. In the start, we can have some 2D-Convolution
+Layers and Pooling Layers, similar to a simple Conv-Net. This is as per our wish
+and we can play around with certain design choices for that, for e.g. whether or
+not to use dropout, the stride sizes, the number of conv-layers, etc.
+The point where the difference arrises is the Output Layer. Instead of having
+a fully connected output layer, the last hidden layer (or the feature layer) of
+the Network is connected to a custom layer of Random Forest. In this layer we have
+a pre-defined number of trees, which can be thought of in a similar way as 
+channels in a convolutional layer. Now, let us focus on one channel (here, tree).
+The model of the tree that we have here is stochastic (or probabilistic) rather
+than deterministic, with each internal node having the probability of going 
+left (or right), given an input point. The leaves contain probability distributuion
+over all classes. The final probability distribution of a tree over the classes is 
+given by the weighted average of that of leaves. The weight for a leaf in this 
+weighted average is the probability of reaching that leaf starting from the root
+node. This probability can be easily calculated because the nodes contain the 
+probability of going left or right from them. Now, from where does these probabilities
+come to the internal nodes? These come from the feature layer which is passed
+through a sigmoid function, so as to compress it's output from 0 to 1. From
+the feature layer, at random, some neurons are chosen and are used for the probability. 
+The final distribution of the forest is simply the average of all the trees. 
+Since this model has a stochastic element to it, because of the Random Forests, this helps
+in better generalization, at a lesser cost of training time. Also, to improve the training
+speed, I have added Batch Normalization Layers, which are defined in a paper 
+which I have linked below. This also seems to increase the accuracy of the model.
+This is because of the (surprising) generalization properties of a Batch Normalisation.
+To train the model, authors have proposed a two step method, however, instead 
+of that we can leave this task to the inbuilt libraries or the auto-grad feature
+in PyTorch. 
+On the MNIST data set, this model reaches about 99% accuracy while using minimal resources.
+
+Links:
+Random Neural Forests: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7410529
+Batch Normalization: https://arxiv.org/pdf/1502.03167.pdf
