@@ -2,6 +2,9 @@ This is an implementation of Deep Neural Decision Forests in PyTorch.
 I have only added the database loader for MNIST Dataset. 
 Thanks to https://github.com/jingxil/Neural-Decision-Forests,
 from where the base code was taken.
-Also, the changes required due the change in PyTorch API has been made.
+Also, the changes required due the change in PyTorch API have been made.
 I have added Batch Normalisation Layers to analyse the change in performance.
-Read the summary which will aid in understanding of the paper.
+
+Read my analysis of the papers and the summary of my work which
+will aid in further understanding of the work.
+Link: https://medium.com/@gurparkashsinghsohi/deep-neural-decision-forests-b1dd39c4c6ce
